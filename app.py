@@ -5,6 +5,8 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from scipy.spatial.distance import cdist
 from tensorflow.keras.models import load_model
+from flask import Flask, request, jsonify
+
 
 data =pd.read_table('./data.csv',delimiter=',')
 scaler = StandardScaler()
@@ -114,3 +116,16 @@ def get_recommendations_dl(song_list, n_songs=10):
         print(f"{i}. {song['name']} ({song['year']}) by {song['artists']}")
 
     return recommendations
+
+
+app = Flask(__name__)
+
+@app.route('/api/recommend', methods=['POST'])
+def api_predict():
+    
+    recommendation = get_recommendations_dl(song_list, n_songs=10)
+    response = jsonify({'recommendation': recommendation})
+    return response
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
