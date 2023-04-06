@@ -108,13 +108,15 @@ def recommend_songs_dl(song_list, spotify_data, model, scaler, n_songs=10):
 def get_recommendations_dl(song_list, n_songs=10):
     # Get recommendations using the recommend_songs_dl() function
     recommendations = recommend_songs_dl(song_list, data, model, scaler, n_songs)
-
-    # Print the recommendations
     print("Recommended songs:")
+    recommendations_dict = {}
     for i, song in enumerate(recommendations, 1):
-        print(f"{i}. {song['name']} ({song['year']}) by {song['artists']}")
-
-    return recommendations
+      recommendations_dict[f"Song {i}"] = {
+        "name": song["name"],
+        "year": song["year"],
+        "artists": song["artists"],
+    }
+    print(recommendations_dict)
 
 
 app = Flask(__name__)
