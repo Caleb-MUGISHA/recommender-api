@@ -25,7 +25,7 @@ def find_song(name, year):
 
     results = results['tracks']['items'][0]
     track_id = results['id']
-    audio_features = sp.audio_features(track_id)[0]
+    
 
     song_data['name'] = [name]
     song_data['year'] = [year]
@@ -33,8 +33,7 @@ def find_song(name, year):
     song_data['duration_ms'] = [results['duration_ms']]
     song_data['popularity'] = [results['popularity']]
 
-    for key, value in audio_features.items():
-        song_data[key] = value
+    
 
     return pd.DataFrame(song_data)
 
